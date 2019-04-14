@@ -4,6 +4,8 @@ import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+import static Server.ServerFunctions.*;
+
 public class Server {
     private static Socket clientSocket;
     private static ServerSocket server;
@@ -14,17 +16,27 @@ public class Server {
         try {
             server = new ServerSocket(4004);
             System.out.println("Server are started!");
-            clientSocket = server.accept();
 
             while (true) {
-
+                clientSocket = server.accept();
                 in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
                 out = new BufferedWriter(new OutputStreamWriter(clientSocket.getOutputStream()));
+                String message = in.readLine();
 
-                String msg = in.readLine();
-                System.out.println("!" + msg + "!");
-                out.write("Server get: " + msg + System.lineSeparator());
-                out.flush();
+                String msg[];
+                msg = message.split(";",10);
+                switch (msg[0]){
+                    case "authorization":
+                        out.write(authorization(msg[1],msg[2],msg[3])+System.lineSeparator());
+                        out.flush();
+                        break;
+                    case "addUser":
+                        out.write(addUser(msg[1],msg[2])+System.lineSeparator());
+                        out.flush();
+                        break;
+                    case "exit":
+                        return;
+                }
             }
 
         } catch (IOException e) {

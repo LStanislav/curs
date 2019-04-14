@@ -2,6 +2,8 @@ package Client;
 
 import java.util.Scanner;
 
+import static Client.ClientFunctions.*;
+
 public class Menu {
     public static void clearScreen() {
         for (int i=0; i<50; i++){
@@ -28,11 +30,101 @@ public class Menu {
         else return -1;
     }
     public static void firstMrenu(){
-        while (true){
+        boolean contin = true;
+        while (contin){
             int choice = showMenu(new String[]{"Вход как Админ","Вход как Пользователь","Вход как Эксперт"});
-
+            switch (choice){
+                case 1:
+                    System.out.println(1);
+                    authorization("admin");
+                    break;
+                case 2:
+                    authorization("user");
+                    System.out.println(2);
+                    break;
+                case 3:
+                    authorization("expert");
+                    System.out.println(3);
+                    break;
+                case 0:
+                    exit();
+                    contin = false;
+                    break;
+                default:
+                    System.out.println("Неверная команда!!!");
+                break;
+            }
         }
     }
     public static void adminMenu(){
+        boolean contin = true;
+        while (contin){
+            int choice = showMenu(new String[]{"пункт1","пункт2","Управление пользователями", "пункт4"});
+            switch (choice){
+                case 1:
+                    System.out.println(1);
+                    break;
+                case 2:
+                    System.out.println(2);
+                    break;
+                case 3:
+                    System.out.println(3);
+                    addUser();
+                    break;
+                case 0:
+                    contin = false;
+                    break;
+                default:
+                    System.out.println("Неверная команда!!!");
+                    break;
+            }
+        }
+    }
+    public static void userMenu(){
+        boolean contin = true;
+        while (contin){
+            int choice = showMenu(new String[]{"пункт1","пункт2","Управление пользователями", "пункт4"});
+            switch (choice){
+                case 1:
+                    System.out.println(1);
+                    break;
+                case 2:
+                    System.out.println(2);
+                    break;
+                case 3:
+                    System.out.println(3);
+                    break;
+                case 0:
+                    contin = false;
+                    break;
+                default:
+                    System.out.println("Неверная команда!!!");
+                    break;
+            }
+        }
+    }
+    public static void expertMenu(){
+        boolean contin = true;
+        while (contin){
+            int choice = showMenu(new String[]{"пункт1","пункт2","Управление пользователями", "пункт4"});
+            switch (choice){
+                case 1:
+                    System.out.println(1);
+                    break;
+                case 2:
+                    System.out.println(2);
+                    break;
+                case 3:
+                    System.out.println(3);
+                    break;
+                case 0:
+                    contin = false;
+                    break;
+                default:
+                    System.out.println("Неверная команда!!!");
+                    break;
+            }
+        }
     }
 }
+
