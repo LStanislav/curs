@@ -30,17 +30,36 @@ public class ServerFunctions {
     }
 
     public static String addUser(String login, String password) {
-        File file = new File("D://JavaProject/curs/enter/user.txt");
-        System.out.println(file.exists()+" " + file.getAbsolutePath());
+        BufferedReader buffer = null;
+        String ans = "";
         try {
-            FileWriter fileWriter = new FileWriter("D://JavaProject/curs/enter/user.txt",true);
-            System.out.println(login + " " + password);
-            fileWriter.write(login+"\n");
-            fileWriter.write(password+"\n");
-            fileWriter.close();
+            FileInputStream fileInputStream = new FileInputStream("D://JavaProject/curs/enter/user.txt");
+            buffer = new BufferedReader(new InputStreamReader(fileInputStream));
+            String log;
+            String pass;
+            while ((log = buffer.readLine()) != null) {
+                pass = buffer.readLine();
+                if (log.equals(login)) {
+                    ans = "Есть пользователь с таким логином!";
+                    break;
+                }
+            }
+            if (ans.equals("")){
+                ans = "Пользователь успешно добавлен!";
+                File file = new File("D://JavaProject/curs/enter/user.txt");
+                System.out.println(file.exists()+" " + file.getAbsolutePath());
+
+                FileWriter fileWriter = new FileWriter("D://JavaProject/curs/enter/user.txt",true);
+                System.out.println(login + " " + password);
+                fileWriter.write(login+"\n");
+                fileWriter.write(password+"\n");
+                fileWriter.close();
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return "Yes";
+        return ans;
     }
 }
