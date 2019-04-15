@@ -8,7 +8,7 @@ public class ServerFunctions {
 
     public static String authorization(String type, String login, String password) {
         try {
-            BufferedReader buffer =  new BufferedReader( new InputStreamReader( new FileInputStream("D://JavaProject/curs/enter/" +type + ".txt")));
+            BufferedReader buffer = new BufferedReader(new InputStreamReader(new FileInputStream("D://JavaProject/curs/enter/" + type + ".txt")));
             String log;
             String pass;
             System.out.println(login + " " + password);
@@ -31,7 +31,7 @@ public class ServerFunctions {
     public static String addUser(String login, String password) {
         String ans = "";
         try {
-            BufferedReader buffer = new BufferedReader( new InputStreamReader( new FileInputStream("D://JavaProject/curs/enter/user.txt")));
+            BufferedReader buffer = new BufferedReader(new InputStreamReader(new FileInputStream("D://JavaProject/curs/enter/user.txt")));
             String log;
             String pass;
             while ((log = buffer.readLine()) != null) {
@@ -41,15 +41,15 @@ public class ServerFunctions {
                     break;
                 }
             }
-            if (ans.equals("")){
+            if (ans.equals("")) {
                 ans = "Пользователь успешно добавлен!";
                 File file = new File("D://JavaProject/curs/enter/user.txt");
-                System.out.println(file.exists()+" " + file.getAbsolutePath());
+                System.out.println(file.exists() + " " + file.getAbsolutePath());
 
-                FileWriter fileWriter = new FileWriter("D://JavaProject/curs/enter/user.txt",true);
+                FileWriter fileWriter = new FileWriter("D://JavaProject/curs/enter/user.txt", true);
                 System.out.println(login + " " + password);
-                fileWriter.write(login+"\n");
-                fileWriter.write(password+"\n");
+                fileWriter.write(login + "\n");
+                fileWriter.write(password + "\n");
                 fileWriter.close();
             }
         } catch (FileNotFoundException e) {
@@ -60,18 +60,18 @@ public class ServerFunctions {
         return ans;
     }
 
-    public static List<String> showUsers(){
+    public static List<String> showUsers() {
         File file = new File("D://JavaProject/curs/enter/user.txt");
-        System.out.println(file.exists()+" " + file.getAbsolutePath());
+        System.out.println(file.exists() + " " + file.getAbsolutePath());
         ArrayList<String> res = new ArrayList<>();
 
         try {
-            BufferedReader bufferedReader = new BufferedReader( new InputStreamReader( new FileInputStream("D://JavaProject/curs/enter/user.txt")));
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(new FileInputStream("D://JavaProject/curs/enter/user.txt")));
             String log;
             String pass;
             while ((log = bufferedReader.readLine()) != null) {
                 pass = bufferedReader.readLine();
-                res.add(log+";"+pass+";");
+                res.add(log + ";" + pass + ";");
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -80,12 +80,12 @@ public class ServerFunctions {
         return res;
     }
 
-    public static String deleteUser(String login){
+    public static String deleteUser(String login) {
         String ans = "";
         try {
             BufferedReader bufferedReader;
             FileWriter fileWriter;
-            bufferedReader = new BufferedReader( new InputStreamReader( new FileInputStream("D://JavaProject/curs/enter/user.txt")));
+            bufferedReader = new BufferedReader(new InputStreamReader(new FileInputStream("D://JavaProject/curs/enter/user.txt")));
             String log;
             String pass;
             while ((log = bufferedReader.readLine()) != null) {
@@ -112,7 +112,7 @@ public class ServerFunctions {
                 fileWriter.close();
 
                 bufferedReader = new BufferedReader(new InputStreamReader(new FileInputStream("D://JavaProject/curs/enter/buffer.txt")));
-                fileWriter = new FileWriter("D://JavaProject/curs/enter/user.txt",true);
+                fileWriter = new FileWriter("D://JavaProject/curs/enter/user.txt", true);
                 while ((log = bufferedReader.readLine()) != null) {
                     pass = bufferedReader.readLine();
                     fileWriter.write(log + "\n");
@@ -136,7 +136,7 @@ public class ServerFunctions {
     public static String addExpert(String login, String password, String competencyLevel) {
         String ans = "";
         try {
-            BufferedReader buffer = new BufferedReader( new InputStreamReader( new FileInputStream("D://JavaProject/curs/enter/expert.txt")));
+            BufferedReader buffer = new BufferedReader(new InputStreamReader(new FileInputStream("D://JavaProject/curs/enter/expert.txt")));
             String log;
             String pass;
             String competLevel;
@@ -148,15 +148,15 @@ public class ServerFunctions {
                     break;
                 }
             }
-            if (ans.equals("")){
+            if (ans.equals("")) {
                 ans = "Эксперт успешно добавлен!";
                 File file = new File("D://JavaProject/curs/enter/expert.txt");
-                System.out.println(file.exists()+" " + file.getAbsolutePath());
+                System.out.println(file.exists() + " " + file.getAbsolutePath());
 
-                FileWriter fileWriter = new FileWriter("D://JavaProject/curs/enter/expert.txt",true);
+                FileWriter fileWriter = new FileWriter("D://JavaProject/curs/enter/expert.txt", true);
                 System.out.println(login + " " + password + " " + competencyLevel);
-                fileWriter.write(login+"\n");
-                fileWriter.write(password+"\n");
+                fileWriter.write(login + "\n");
+                fileWriter.write(password + "\n");
                 fileWriter.write(competencyLevel + "\n");
                 fileWriter.write("0 0 0" + "\n");
                 fileWriter.close();
@@ -171,11 +171,11 @@ public class ServerFunctions {
 
     public static List<String> showExperts() {
         File file = new File("D://JavaProject/curs/enter/expert.txt");
-        System.out.println(file.exists()+" " + file.getAbsolutePath());
+        System.out.println(file.exists() + " " + file.getAbsolutePath());
 
         ArrayList<String> res = new ArrayList<>();
         try {
-            BufferedReader bufferedReader = new BufferedReader( new InputStreamReader( new FileInputStream("D://JavaProject/curs/enter/expert.txt")));
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(new FileInputStream("D://JavaProject/curs/enter/expert.txt")));
             String log;
             String pass;
             String competencyLevel;
@@ -185,7 +185,7 @@ public class ServerFunctions {
                 pass = bufferedReader.readLine();
                 competencyLevel = bufferedReader.readLine();
                 ratings = bufferedReader.readLine();
-                res.add(log+";"+pass+";" + competencyLevel + ";" + ratings + ";");
+                res.add(log + ";" + pass + ";" + competencyLevel + ";" + ratings + ";");
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -194,4 +194,165 @@ public class ServerFunctions {
         return res;
     }
 
+    public static String findExpert(String login) {
+        File file = new File("D://JavaProject/curs/enter/expert.txt");
+        System.out.println(file.exists() + " " + file.getAbsolutePath());
+        StringBuilder res = new StringBuilder("");
+        try {
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(new FileInputStream("D://JavaProject/curs/enter/expert.txt")));
+            String log;
+            String pass;
+            String competencyLevel;
+            String ratings;
+
+            while ((log = bufferedReader.readLine()) != null) {
+                pass = bufferedReader.readLine();
+                competencyLevel = bufferedReader.readLine();
+                ratings = bufferedReader.readLine();
+                if (log.equals(login)) {
+                    res.append(log + ";" + pass + ";" + competencyLevel + ";" + ratings + ";");
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return res.toString();
+    }
+
+    public static String deleteExpert(String login) {
+        String ans = "";
+        try {
+            BufferedReader bufferedReader;
+            FileWriter fileWriter;
+            bufferedReader = new BufferedReader(new InputStreamReader(new FileInputStream("D://JavaProject/curs/enter/expert.txt")));
+            String log;
+            String pass;
+            String competencyLevel;
+            String ratings;
+            while ((log = bufferedReader.readLine()) != null) {
+                pass = bufferedReader.readLine();
+                competencyLevel = bufferedReader.readLine();
+                ratings = bufferedReader.readLine();
+                if (log.equals(login)) {
+                    ans = "Эксперт успешно удален!";
+                }
+            }
+
+            if (!ans.equals("")) {
+                bufferedReader = new BufferedReader(new InputStreamReader(new FileInputStream("D://JavaProject/curs/enter/expert.txt")));
+                fileWriter = new FileWriter("D://JavaProject/curs/enter/buffer.txt", true);
+
+                while ((log = bufferedReader.readLine()) != null) {
+                    pass = bufferedReader.readLine();
+                    competencyLevel = bufferedReader.readLine();
+                    ratings = bufferedReader.readLine();
+                    if (!log.equals(login)) {
+                        fileWriter.write(log + "\n");
+                        fileWriter.write(pass + "\n");
+                        fileWriter.write(competencyLevel + "\n");
+                        fileWriter.write(ratings + "\n");
+                    }
+                }
+                fileWriter.close();
+                fileWriter = new FileWriter("D://JavaProject/curs/enter/expert.txt");
+                fileWriter.write("");
+                fileWriter.close();
+
+                bufferedReader = new BufferedReader(new InputStreamReader(new FileInputStream("D://JavaProject/curs/enter/buffer.txt")));
+                fileWriter = new FileWriter("D://JavaProject/curs/enter/expert.txt", true);
+                while ((log = bufferedReader.readLine()) != null) {
+                    pass = bufferedReader.readLine();
+                    competencyLevel = bufferedReader.readLine();
+                    ratings = bufferedReader.readLine();
+
+                    fileWriter.write(log + "\n");
+                    fileWriter.write(pass + "\n");
+                    fileWriter.write(competencyLevel + "\n");
+                    fileWriter.write(ratings + "\n");
+                    fileWriter.flush();
+                }
+                fileWriter = new FileWriter("D://JavaProject/curs/enter/buffer.txt");
+                fileWriter.write("");
+                fileWriter.close();
+            } else {
+                ans = "Нет эксперта с таким логином!";
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return ans;
+    }
+
+    public static String editExpert(String login, String competencyLevel) {
+        String ans = "";
+        try {
+            BufferedReader bufferedReader;
+            FileWriter fileWriter;
+            bufferedReader = new BufferedReader(new InputStreamReader(new FileInputStream("D://JavaProject/curs/enter/expert.txt")));
+            String log;
+            String pass;
+            String competLevel;
+            String ratings;
+            while ((log = bufferedReader.readLine()) != null) {
+                pass = bufferedReader.readLine();
+                competLevel = bufferedReader.readLine();
+                ratings = bufferedReader.readLine();
+                if (log.equals(login)) {
+                    ans = "Информация об эксперте успешно отредактирована!";
+                }
+            }
+
+            if (!ans.equals("")) {
+                bufferedReader = new BufferedReader(new InputStreamReader(new FileInputStream("D://JavaProject/curs/enter/expert.txt")));
+                fileWriter = new FileWriter("D://JavaProject/curs/enter/buffer.txt", true);
+
+                while ((log = bufferedReader.readLine()) != null) {
+                    pass = bufferedReader.readLine();
+                    competLevel = bufferedReader.readLine();
+                    ratings = bufferedReader.readLine();
+
+                    fileWriter.write(log + "\n");
+                    fileWriter.write(pass + "\n");
+                    if (!log.equals(login)) {
+                        fileWriter.write(competLevel + "\n");
+                    } else {
+                        fileWriter.write(competencyLevel + "\n");
+                    }
+                    fileWriter.write(ratings + "\n");
+
+                }
+                fileWriter.close();
+
+                fileWriter = new FileWriter("D://JavaProject/curs/enter/expert.txt");
+                fileWriter.write("");
+                fileWriter.close();
+
+                bufferedReader = new BufferedReader(new InputStreamReader(new FileInputStream("D://JavaProject/curs/enter/buffer.txt")));
+                fileWriter = new FileWriter("D://JavaProject/curs/enter/expert.txt", true);
+                while ((log = bufferedReader.readLine()) != null) {
+                    pass = bufferedReader.readLine();
+                    competLevel = bufferedReader.readLine();
+                    ratings = bufferedReader.readLine();
+
+                    fileWriter.write(log + "\n");
+                    fileWriter.write(pass + "\n");
+                    fileWriter.write(competLevel + "\n");
+                    fileWriter.write(ratings + "\n");
+                    fileWriter.flush();
+                }
+                fileWriter = new FileWriter("D://JavaProject/curs/enter/buffer.txt");
+                fileWriter.write("");
+                fileWriter.close();
+            } else {
+                ans = "Нет эксперта с таким логином!";
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return ans;
+    }
 }

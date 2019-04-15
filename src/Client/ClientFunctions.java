@@ -13,6 +13,7 @@ public class ClientFunctions {
     private static BufferedReader in;
     private static BufferedWriter out;
     private static Scanner reader;
+
     private static String encrypt(String string) {
         StringBuilder result = new StringBuilder();
         for (int i = 0; i < string.length(); i++) {
@@ -22,17 +23,18 @@ public class ClientFunctions {
         }
         return result.toString();
     }
-    public static String decoding(String str){
+
+    public static String decoding(String str) {
         StringBuilder ans = new StringBuilder();
-        for (int i=0; i<str.length(); i++) {
+        for (int i = 0; i < str.length(); i++) {
             if (Character.isDigit(str.charAt(i) + 10)) {
-                ans.append((char)(str.charAt(i) + 10));
-            }
-            else ans.append((char)(str.charAt(i) - 10));
+                ans.append((char) (str.charAt(i) + 10));
+            } else ans.append((char) (str.charAt(i) - 10));
         }
         return ans.toString();
     }
-    private static Connector connector = ()->{
+
+    private static Connector connector = () -> {
         try {
             clientSocket = new Socket("localhost", 4004);
             reader = new Scanner(System.in);
@@ -47,7 +49,7 @@ public class ClientFunctions {
     public static void authorization(String type) {
         try {
             String ans;
-            while (true){
+            while (true) {
                 connector.connect();
                 StringBuilder msg = new StringBuilder("authorization;");
                 msg.append(type);
@@ -89,18 +91,18 @@ public class ClientFunctions {
 
     }
 
-    public static void exit(){
+    public static void exit() {
         connector.connect();
         try {
-            out.write("exit;"+System.lineSeparator());
+            out.write("exit;" + System.lineSeparator());
             out.flush();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public static void addUser(){
-        String log,pass1, pass2;
+    public static void addUser() {
+        String log, pass1, pass2;
         System.out.println("Регистрация");
         System.out.println("Введите новый логин:");
         log = reader.nextLine();
@@ -110,16 +112,16 @@ public class ClientFunctions {
 
         System.out.println("Подтвердите пароль:");
         pass2 = reader.nextLine();
-        if (!pass1.equals(pass2)){
+        if (!pass1.equals(pass2)) {
             System.out.println("Пароли не совпадают!");
             return;
         }
         connector.connect();
         try {
             StringBuilder msg = new StringBuilder("addUser;");
-            msg.append(encrypt(log)+";");
-            msg.append(encrypt(pass1)+";");
-            out.write(msg+System.lineSeparator());
+            msg.append(encrypt(log) + ";");
+            msg.append(encrypt(pass1) + ";");
+            out.write(msg + System.lineSeparator());
             out.flush();
             System.out.println(in.readLine());
         } catch (IOException e) {
@@ -127,7 +129,7 @@ public class ClientFunctions {
         }
     }
 
-    public static void deleteUser(){
+    public static void deleteUser() {
         connector.connect();
         StringBuilder msg = new StringBuilder("deleteUser;");
         System.out.println("Введите логин, удаляемого пользователя:");
@@ -136,21 +138,21 @@ public class ClientFunctions {
         try {
             out.write(msg + System.lineSeparator());
             out.flush();
-            System.out.println(in.readLine()+"!");
+            System.out.println(in.readLine() + "!");
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public static void showUsers(){
+    public static void showUsers() {
         connector.connect();
         StringBuilder msg = new StringBuilder("showUsers;");
         try {
-            out.write(msg+System.lineSeparator());
+            out.write(msg + System.lineSeparator());
             out.flush();
             String buf = in.readLine();
-            while (!buf.equals(";;")){
-                String part[] = buf.split(";",3);
+            while (!buf.equals(";;")) {
+                String part[] = buf.split(";", 3);
                 System.out.println(decoding(part[0]) + "  |  " + decoding(part[1]));
                 buf = in.readLine();
             }
@@ -159,8 +161,8 @@ public class ClientFunctions {
         }
     }
 
-    public static void addExpert(){
-        String log,pass1, pass2, competencyLevel;
+    public static void addExpert() {
+        String log, pass1, pass2, competencyLevel;
 
         System.out.println("Регистрация");
         System.out.println("Введите новый логин: ");
@@ -171,27 +173,27 @@ public class ClientFunctions {
 
         System.out.println("Подтвердите пароль: ");
         pass2 = reader.nextLine();
-        if (!pass1.equals(pass2)){
+        if (!pass1.equals(pass2)) {
             System.out.println("Пароли не совпадают!");
             return;
         }
         System.out.println("Введите уровень компетентности эксперта(0..10): ");
         competencyLevel = reader.nextLine();
         try {
-            if ((Integer.parseInt(competencyLevel)<0) || (Integer.parseInt(competencyLevel)>10)){
+            if ((Integer.parseInt(competencyLevel) < 0) || (Integer.parseInt(competencyLevel) > 10)) {
                 System.out.println("Неверный уровень компетентности!");
                 return;
             }
-        } catch (NumberFormatException e){
+        } catch (NumberFormatException e) {
             e.printStackTrace();
         }
         connector.connect();
         try {
             StringBuilder msg = new StringBuilder("addExpert;");
-            msg.append(encrypt(log)+";");
-            msg.append(encrypt(pass1)+";");
-            msg.append(competencyLevel+";");
-            out.write(msg+System.lineSeparator());
+            msg.append(encrypt(log) + ";");
+            msg.append(encrypt(pass1) + ";");
+            msg.append(competencyLevel + ";");
+            out.write(msg + System.lineSeparator());
             out.flush();
             System.out.println(in.readLine());
         } catch (IOException e) {
@@ -199,24 +201,96 @@ public class ClientFunctions {
         }
     }
 
-    public static void showExpert(){
+    public static void showExpert() {
         connector.connect();
         StringBuilder msg = new StringBuilder("showExperts;");
         try {
-            out.write(msg+System.lineSeparator());
+            out.write(msg + System.lineSeparator());
             out.flush();
             String buf = in.readLine();
-            while (!buf.equals(";;;;")){
+            while (!buf.equals(";;;;")) {
                 String part[] = buf.split(";", 20);
                 System.out.print(decoding(part[0]) + "  |  " + decoding(part[1]) + "  |  " + part[2] + " | (");
 
                 String ratings[] = part[3].split(" ", 20);
-                for (int i=0; i<ratings.length-1; i++){
+                for (int i = 0; i < ratings.length - 1; i++) {
                     System.out.print(ratings[i] + ",");
                 }
-                System.out.println(ratings[ratings.length-1] + ")");
+                System.out.println(ratings[ratings.length - 1] + ")");
                 buf = in.readLine();
             }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void findExpert() {
+        connector.connect();
+        StringBuilder msg = new StringBuilder("findExpert;");
+        System.out.println("Введите номер(логин) экперта: ");
+        String log = reader.nextLine();
+        msg.append(encrypt(log) + ";");
+        try {
+            out.write(msg + System.lineSeparator());
+            out.flush();
+            String buf = in.readLine();
+            if (!buf.equals("")) {
+                String part[] = buf.split(";", 20);
+                System.out.print(decoding(part[0]) + "  |  " + decoding(part[1]) + "  |  " + part[2] + " | (");
+                String ratings[] = part[3].split(" ", 20);
+
+                for (int i = 0; i < ratings.length - 1; i++) {
+                    System.out.print(ratings[i] + ",");
+                }
+                System.out.println(ratings[ratings.length - 1] + ")");
+            } else{
+                System.out.println("Нет пользователя с таким номером!");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void deleteExpert(){
+        connector.connect();
+        StringBuilder msg = new StringBuilder("deleteExpert;");
+        System.out.println("Введите логин, удаляемого экперта:");
+        String log = reader.nextLine();
+        msg.append(encrypt(log) + ";");
+        try {
+            out.write(msg + System.lineSeparator());
+            out.flush();
+            System.out.println(in.readLine() + "!");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void editExpert(){
+
+        StringBuilder msg = new StringBuilder("editExpert;");
+        System.out.println("Введите логин, редактируемого экперта:");
+        String log = reader.nextLine();
+
+        String competencyLevel;
+
+        System.out.println("Введите уровень компетентности эксперта(0..10): ");
+        competencyLevel = reader.nextLine();
+        try {
+            if ((Integer.parseInt(competencyLevel) < 0) || (Integer.parseInt(competencyLevel) > 10)) {
+                System.out.println("Неверный уровень компетентности!");
+                return;
+            }
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+        }
+        msg.append(encrypt(log) + ";");
+        msg.append(competencyLevel + ";");
+        connector.connect();
+        try {
+            out.write(msg + System.lineSeparator());
+            out.flush();
+            System.out.println(in.readLine() + "!");
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -25,20 +25,20 @@ public class Server {
                 String message = in.readLine();
 
                 String msg[];
-                msg = message.split(";",10);
-                switch (msg[0]){
+                msg = message.split(";", 10);
+                switch (msg[0]) {
                     case "authorization":
-                        out.write(authorization(msg[1],msg[2],msg[3])+System.lineSeparator());
+                        out.write(authorization(msg[1], msg[2], msg[3]) + System.lineSeparator());
                         out.flush();
                         break;
                     case "addUser":
-                        out.write(addUser(msg[1],msg[2])+System.lineSeparator());
+                        out.write(addUser(msg[1], msg[2]) + System.lineSeparator());
                         out.flush();
                         break;
                     case "showUsers":
                         List<String> list = showUsers();
                         for (String i : list) {
-                            out.write(i+System.lineSeparator());
+                            out.write(i + System.lineSeparator());
                             out.flush();
                         }
                         break;
@@ -47,15 +47,27 @@ public class Server {
                         out.flush();
                         break;
                     case "addExpert":
-                        out.write(addExpert(msg[1],msg[2],msg[3])+System.lineSeparator());
+                        out.write(addExpert(msg[1], msg[2], msg[3]) + System.lineSeparator());
                         out.flush();
                         break;
                     case "showExperts":
                         list = showExperts();
                         for (String i : list) {
-                            out.write(i+System.lineSeparator());
+                            out.write(i + System.lineSeparator());
                             out.flush();
                         }
+                        break;
+                    case "findExpert":
+                        out.write(findExpert(msg[1]) + System.lineSeparator());
+                        out.flush();
+                        break;
+                    case "deleteExpert":
+                        out.write(deleteExpert(msg[1]) + System.lineSeparator());
+                        out.flush();
+                        break;
+                    case "editExpert":
+                        out.write(editExpert(msg[1],msg[2]) + System.lineSeparator());
+                        out.flush();
                         break;
                     case "exit":
                         return;

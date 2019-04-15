@@ -115,17 +115,19 @@ public class Menu {
         boolean contin = true;
         while (contin) {
             int choice = showMenu(new String[]{"Добавление экперта", "Удаление эксперта", "Просмотр оценок одного эксперта",
-                    "Просмотр всех экспертов", "Изменение приоритета эксперта", "Таблица приоритетов"});
+                    "Просмотр всех экспертов", "Изменение уровня компетентнсти эксперта", "Таблица приоритетов"});
             switch (choice) {
                 case 1:
                     System.out.println(1);
                     addExpert();
                     break;
                 case 2:
+                    deleteExpert();
                     System.out.println(2);
                     break;
                 case 3:
                     System.out.println(3);
+                    findExpert();
                     break;
                 case 4:
                     System.out.println(4);
@@ -133,6 +135,7 @@ public class Menu {
                     break;
                 case 5:
                     System.out.println(5);
+                    editExpert();
                     break;
                 case 6:
                     System.out.println(6);
