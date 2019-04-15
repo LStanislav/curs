@@ -3,6 +3,7 @@ package Server;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.List;
 
 import static Server.ServerFunctions.*;
 
@@ -33,6 +34,28 @@ public class Server {
                     case "addUser":
                         out.write(addUser(msg[1],msg[2])+System.lineSeparator());
                         out.flush();
+                        break;
+                    case "showUsers":
+                        List<String> list = showUsers();
+                        for (String i : list) {
+                            out.write(i+System.lineSeparator());
+                            out.flush();
+                        }
+                        break;
+                    case "deleteUser":
+                        out.write(deleteUser(msg[1]) + System.lineSeparator());
+                        out.flush();
+                        break;
+                    case "addExpert":
+                        out.write(addExpert(msg[1],msg[2],msg[3])+System.lineSeparator());
+                        out.flush();
+                        break;
+                    case "showExperts":
+                        list = showExperts();
+                        for (String i : list) {
+                            out.write(i+System.lineSeparator());
+                            out.flush();
+                        }
                         break;
                     case "exit":
                         return;
