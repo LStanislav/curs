@@ -69,6 +69,21 @@ public class Server {
                         out.write(editExpert(msg[1],msg[2]) + System.lineSeparator());
                         out.flush();
                         break;
+                    case "addGoal":
+                        out.write(addGoal(msg[1],msg[2]) +  System.lineSeparator());
+                        out.flush();
+                        break;
+                    case "deleteGoal":
+                        out.write(deleteGoal(msg[1]) +  System.lineSeparator());
+                        out.flush();
+                        break;
+                    case "showGoals":
+                        list = showGoals();
+                        for (String i : list) {
+                            out.write(i + System.lineSeparator());
+                            out.flush();
+                        }
+                        break;
                     case "exit":
                         return;
                 }

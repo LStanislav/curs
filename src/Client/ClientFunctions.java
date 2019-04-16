@@ -243,7 +243,7 @@ public class ClientFunctions {
                     System.out.print(ratings[i] + ",");
                 }
                 System.out.println(ratings[ratings.length - 1] + ")");
-            } else{
+            } else {
                 System.out.println("Нет пользователя с таким номером!");
             }
         } catch (IOException e) {
@@ -251,7 +251,7 @@ public class ClientFunctions {
         }
     }
 
-    public static void deleteExpert(){
+    public static void deleteExpert() {
         connector.connect();
         StringBuilder msg = new StringBuilder("deleteExpert;");
         System.out.println("Введите логин, удаляемого экперта:");
@@ -266,7 +266,7 @@ public class ClientFunctions {
         }
     }
 
-    public static void editExpert(){
+    public static void editExpert() {
 
         StringBuilder msg = new StringBuilder("editExpert;");
         System.out.println("Введите логин, редактируемого экперта:");
@@ -291,6 +291,59 @@ public class ClientFunctions {
             out.write(msg + System.lineSeparator());
             out.flush();
             System.out.println(in.readLine() + "!");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void addGoal() {
+        connector.connect();
+        StringBuilder msg = new StringBuilder("addGoal;");
+        String title;
+        String description;
+        System.out.println("Введите заголовок цели: ");
+        title = reader.nextLine();
+        System.out.println("Введите описание цели: ");
+        description = reader.nextLine();
+        msg.append(title + ";");
+        msg.append(description + ";");
+
+        try {
+            out.write(msg + System.lineSeparator());
+            out.flush();
+            System.out.println(in.readLine());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void deleteGoal(){
+        connector.connect();
+        StringBuilder msg = new StringBuilder("deleteGoal;");
+        System.out.println("Введите заголовок, удаляемой цели: ");
+        String title = reader.nextLine();
+        msg.append(title + ";");
+        try {
+            out.write(msg + System.lineSeparator());
+            out.flush();
+            System.out.println(in.readLine() + "!");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void showGoals(){
+        connector.connect();
+        StringBuilder msg = new StringBuilder("showGoals;");
+        try {
+            out.write(msg + System.lineSeparator());
+            out.flush();
+            String buf = in.readLine();
+            while (!buf.equals(";;")) {
+                String part[] = buf.split(";", 5);
+                System.out.println(part[0] + "  |  " + part[1]);
+                buf = in.readLine();
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }

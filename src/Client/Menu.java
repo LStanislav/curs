@@ -115,7 +115,7 @@ public class Menu {
         boolean contin = true;
         while (contin) {
             int choice = showMenu(new String[]{"Добавление экперта", "Удаление эксперта", "Просмотр оценок одного эксперта",
-                    "Просмотр всех экспертов", "Изменение уровня компетентнсти эксперта", "Таблица приоритетов"});
+                    "Просмотр всех экспертов", "Изменение уровня компетентности эксперта", "Таблица приоритетов"});
             switch (choice) {
                 case 1:
                     System.out.println(1);
@@ -151,13 +151,40 @@ public class Menu {
     }
 
     public static void goalsManagementMenu() {
-
+        boolean contin = true;
+        while (contin) {
+            int choice = showMenu(new String[]{"Добавление цели", "Удаление цели", "Просмотр всех целей с описанием",
+                    "Расчет весов всех целей"});
+            switch (choice) {
+                case 1:
+                    System.out.println(1);
+                    addGoal();
+                    break;
+                case 2:
+                    System.out.println(2);
+                    deleteGoal();
+                    break;
+                case 3:
+                    System.out.println(3);
+                    showGoals();
+                    break;
+                case 4:
+                    System.out.println(4);
+                    break;
+                case 0:
+                    contin = false;
+                    break;
+                default:
+                    System.out.println("Неверная команда!!!");
+                    break;
+            }
+        }
     }
 
     public static void userMenu() {
         boolean contin = true;
         while (contin) {
-            int choice = showMenu(new String[]{"Промотр условий целей", "Просмотр итоговых весов целей"});
+            int choice = showMenu(new String[]{"Просмотр всех целей с описанием", "Просмотр итоговых весов целей"});
             switch (choice) {
                 case 1:
                     System.out.println(1);
@@ -178,7 +205,7 @@ public class Menu {
     public static void expertMenu() {
         boolean contin = true;
         while (contin) {
-            int choice = showMenu(new String[]{"Просмотр условий целей", "Вынесение оценок по всем целям"});
+            int choice = showMenu(new String[]{"Просмотр всех целей с описанием", "Вынесение оценок по всем целям"});
             switch (choice) {
                 case 1:
                     System.out.println(1);
