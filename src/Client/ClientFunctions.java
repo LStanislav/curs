@@ -1,9 +1,12 @@
 package Client;
 
 import com.sun.org.apache.xerces.internal.util.SynchronizedSymbolTable;
+import org.omg.CORBA.PUBLIC_MEMBER;
 
 import java.io.*;
+import java.lang.reflect.Array;
 import java.net.Socket;
+import java.util.Arrays;
 import java.util.Scanner;
 
 import static Client.Menu.*;
@@ -49,13 +52,15 @@ public class ClientFunctions {
     public static void authorization(String type) {
         try {
             String ans;
+            String login;
             while (true) {
                 connector.connect();
                 StringBuilder msg = new StringBuilder("authorization;");
                 msg.append(type);
                 msg.append(";");
                 System.out.print("Логин: ");
-                msg.append(encrypt(reader.nextLine()));
+                login = reader.nextLine();
+                msg.append(encrypt(login));
                 msg.append(";");
                 System.out.print("Пароль: ");
                 msg.append(encrypt(reader.nextLine()));
@@ -81,7 +86,7 @@ public class ClientFunctions {
                         userMenu();
                         break;
                     case "expert":
-                        expertMenu();
+                        expertMenu(login);
                         break;
                 }
             }
@@ -208,7 +213,7 @@ public class ClientFunctions {
             out.write(msg + System.lineSeparator());
             out.flush();
             String buf = in.readLine();
-            while (!buf.equals(";;;;")) {
+            while (!buf.equals(";;")) {
                 String part[] = buf.split(";", 20);
                 System.out.print(decoding(part[0]) + "  |  " + decoding(part[1]) + "  |  " + part[2] + " | (");
 
@@ -290,7 +295,7 @@ public class ClientFunctions {
         try {
             out.write(msg + System.lineSeparator());
             out.flush();
-            System.out.println(in.readLine() + "!");
+            System.out.println(in.readLine());
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -317,7 +322,7 @@ public class ClientFunctions {
         }
     }
 
-    public static void deleteGoal(){
+    public static void deleteGoal() {
         connector.connect();
         StringBuilder msg = new StringBuilder("deleteGoal;");
         System.out.println("Введите заголовок, удаляемой цели: ");
@@ -332,7 +337,7 @@ public class ClientFunctions {
         }
     }
 
-    public static void showGoals(){
+    public static void showGoals() {
         connector.connect();
         StringBuilder msg = new StringBuilder("showGoals;");
         try {
@@ -344,6 +349,94 @@ public class ClientFunctions {
                 System.out.println(part[0] + "  |  " + part[1]);
                 buf = in.readLine();
             }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void estimateGoals(String login) {
+        connector.connect();
+        StringBuilder msg = new StringBuilder("estimateGoals;");
+
+        try {
+            msg.append(encrypt(login) + ";");
+            out.write(msg + System.lineSeparator());
+            out.flush();
+            msg = new StringBuilder();
+            String buf = in.readLine();
+            while (!buf.equals(";;")) {
+                String part[] = buf.split(";", 5);
+                System.out.println(part[0] + "  |  " + part[1]);
+                while (true) {
+                    System.out.println("Введите вашу оценку: ");
+                    String mark = reader.nextLine();
+                    try {
+                        if ((Integer.parseInt(mark) < 0) || (Integer.parseInt(mark) > 10)) {
+                            System.out.println("Неверая оценка!");
+                        } else {
+                            msg.append(mark + " ");
+                            break;
+                        }
+                    } catch (NumberFormatException e) {
+                        e.printStackTrace();
+                    }
+                }
+                buf = in.readLine();
+            }
+            out.write(msg + System.lineSeparator());
+            out.flush();
+            System.out.println(in.readLine());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void showResults() {
+        connector.connect();
+        StringBuilder msg = new StringBuilder("showResults;");
+        try {
+            out.write(msg + System.lineSeparator());
+            out.flush();
+            int numberExperts = Integer.parseInt(in.readLine());
+            int numberGoals = Integer.parseInt(in.readLine());
+            System.out.println(numberExperts);
+            System.out.println(numberGoals);
+
+            int marks[][] = new int[numberExperts][numberGoals];
+            int competencies[] = new int[numberExperts];
+            double results[] = new double[numberGoals];
+            int sumCompetencies = 0;
+            String buf = in.readLine();
+            int i = 0;
+            while (!buf.equals(";;")) {
+                String part[] = buf.split(";", 20);
+                //System.out.print(decoding(part[0]) + "  |  " + decoding(part[1]) + "  |  " + part[2] + " | (");
+                competencies[i] = Integer.parseInt(part[2]);
+                sumCompetencies += competencies[i];
+                String ratings[] = part[3].split(" ", 20);
+                for (int j = 0; j < ratings.length - 1; j++) {
+                    marks[i][j] = Integer.parseInt(ratings[j]);
+                }
+                marks[i][ratings.length - 1] = Integer.parseInt(ratings[ratings.length - 1]);
+                i++;
+                buf = in.readLine();
+            }
+
+            System.out.println(Arrays.toString(competencies));
+            System.out.println("sumCompetencies= " +  sumCompetencies);
+            for (i = 0; i < numberExperts; i++) {
+                for (int j = 0; j < numberGoals; j++) {
+                    System.out.printf("%3d", marks[i][j]);
+                    double multiplier = (double)competencies[i]/(double)sumCompetencies;
+                    //System.out.println(i + " " + j + " " + multiplier);
+                    results[j]+=multiplier*(double)marks[i][j];
+                }
+                System.out.println();
+            }
+            for (int j=0; j<numberGoals; j++){
+                System.out.printf("%3f ", results[j]);
+            }
+            System.out.println();
         } catch (IOException e) {
             e.printStackTrace();
         }

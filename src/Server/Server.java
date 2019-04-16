@@ -84,6 +84,26 @@ public class Server {
                             out.flush();
                         }
                         break;
+                    case "estimateGoals":
+                        list = showGoals();
+                        for (String i : list) {
+                            out.write(i + System.lineSeparator());
+                            out.flush();
+                        }
+                        out.write(editExpertMark(msg[1], in.readLine()) + System.lineSeparator());
+                        out.flush();
+                        break;
+                    case "showResults":
+                        out.write(calculateNumberExperts()+System.lineSeparator());
+                        out.flush();
+                        out.write(calculateNumberGoals()+System.lineSeparator());
+                        out.flush();
+                        list = showExperts();
+                        for (String i : list) {
+                            out.write(i + System.lineSeparator());
+                            out.flush();
+                        }
+                        break;
                     case "exit":
                         return;
                 }

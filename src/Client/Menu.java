@@ -170,6 +170,7 @@ public class Menu {
                     break;
                 case 4:
                     System.out.println(4);
+                    showResults();
                     break;
                 case 0:
                     contin = false;
@@ -188,6 +189,7 @@ public class Menu {
             switch (choice) {
                 case 1:
                     System.out.println(1);
+                    showGoals();
                     break;
                 case 2:
                     System.out.println(2);
@@ -202,16 +204,18 @@ public class Menu {
         }
     }
 
-    public static void expertMenu() {
+    public static void expertMenu(String login){
         boolean contin = true;
         while (contin) {
             int choice = showMenu(new String[]{"Просмотр всех целей с описанием", "Вынесение оценок по всем целям"});
             switch (choice) {
                 case 1:
                     System.out.println(1);
+                    showGoals();
                     break;
                 case 2:
                     System.out.println(2);
+                    estimateGoals(login);
                     break;
                 case 0:
                     contin = false;

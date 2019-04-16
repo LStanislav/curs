@@ -190,7 +190,7 @@ public class ServerFunctions {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        res.add(";;;;");
+        res.add(";;");
         return res;
     }
 
@@ -462,5 +462,103 @@ public class ServerFunctions {
         }
         res.add(";;");
         return res;
+    }
+
+    public static String editExpertMark(String login, String ratings){
+        String ans = "Оценки успешно занесены!";
+        try {
+            BufferedReader bufferedReader;
+            ratings = ratings.trim();
+            FileWriter fileWriter;
+            String log;
+            String pass;
+            String competLevel;
+            String rat;
+            System.out.println(login + " " + ratings);
+            if (!ans.equals("")) {
+                bufferedReader = new BufferedReader(new InputStreamReader(new FileInputStream("D://JavaProject/curs/enter/expert.txt")));
+                fileWriter = new FileWriter("D://JavaProject/curs/enter/buffer.txt", true);
+
+                while ((log = bufferedReader.readLine()) != null) {
+                    pass = bufferedReader.readLine();
+                    competLevel = bufferedReader.readLine();
+                    rat = bufferedReader.readLine();
+                    fileWriter.write(log + "\n");
+                    fileWriter.write(pass + "\n");
+                    fileWriter.write(competLevel + "\n");
+                    if (!log.equals(login)) {
+                        fileWriter.write(rat + "\n");
+                    } else {
+                        fileWriter.write(ratings + "\n");
+                    }
+                }
+                fileWriter.close();
+
+                fileWriter = new FileWriter("D://JavaProject/curs/enter/expert.txt");
+                fileWriter.write("");
+                fileWriter.close();
+
+                bufferedReader = new BufferedReader(new InputStreamReader(new FileInputStream("D://JavaProject/curs/enter/buffer.txt")));
+                fileWriter = new FileWriter("D://JavaProject/curs/enter/expert.txt", true);
+                while ((log = bufferedReader.readLine()) != null) {
+                    pass = bufferedReader.readLine();
+                    competLevel = bufferedReader.readLine();
+                    rat = bufferedReader.readLine();
+
+                    fileWriter.write(log + "\n");
+                    fileWriter.write(pass + "\n");
+                    fileWriter.write(competLevel + "\n");
+                    fileWriter.write(rat + "\n");
+                    fileWriter.flush();
+                }
+                fileWriter = new FileWriter("D://JavaProject/curs/enter/buffer.txt");
+                fileWriter.write("");
+                fileWriter.close();
+            } else {
+                ans = "Нет эксперта с таким логином!";
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return ans;
+    }
+
+    public static String calculateNumberExperts(){
+        Integer result = 0;
+        String buf;
+        try {
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(new FileInputStream("D://JavaProject/curs/enter/expert.txt")));
+            while ((buf=bufferedReader.readLine())!=null){
+                result++;
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        System.out.println(result);
+        result/=4;
+        System.out.println(result);
+        return result.toString();
+    }
+    public static String calculateNumberGoals(){
+        Integer result = 0;
+        String buf;
+        try {
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(new FileInputStream("D://JavaProject/curs/enter/goal.txt")));
+            while ((buf=bufferedReader.readLine())!=null){
+                result++;
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        System.out.println(result);
+        result/=2;
+        System.out.println(result);
+        return result.toString();
     }
 }
