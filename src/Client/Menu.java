@@ -5,6 +5,7 @@ import java.util.Scanner;
 import static Client.ClientFunctions.*;
 
 public class Menu {
+    private Menu(){}
     public static void clearScreen() {
         for (int i = 0; i < 50; i++) {
             System.out.println();
@@ -29,7 +30,7 @@ public class Menu {
         } else return -1;
     }
 
-    public static void firstMrenu() {
+    public static void firstMenu() {
         boolean contin = true;
         while (contin) {
             int choice = showMenu(new String[]{"Вход как Админ", "Вход как Пользователь", "Вход как Эксперт"});
@@ -154,7 +155,7 @@ public class Menu {
         boolean contin = true;
         while (contin) {
             int choice = showMenu(new String[]{"Добавление цели", "Удаление цели", "Просмотр всех целей с описанием",
-                    "Расчет весов всех целей"});
+                    "Просмотр итоговых весов целей"});
             switch (choice) {
                 case 1:
                     System.out.println(1);
