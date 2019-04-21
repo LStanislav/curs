@@ -28,7 +28,7 @@ public class ServerFunctions {
         return "No";
     }
 
-    public static String addUser(String login, String password) {
+    synchronized public static String addUser(String login, String password) {
         String ans = "";
         try {
             BufferedReader buffer = new BufferedReader(new InputStreamReader(new FileInputStream("D://JavaProject/curs/enter/user.txt")));
@@ -80,7 +80,7 @@ public class ServerFunctions {
         return res;
     }
 
-    public static String deleteUser(String login) {
+    synchronized public static String deleteUser(String login) {
         String ans = "";
         try {
             BufferedReader bufferedReader;
@@ -133,7 +133,7 @@ public class ServerFunctions {
         return ans;
     }
 
-    public static String addExpert(String login, String password, String competencyLevel) {
+    synchronized public static String addExpert(String login, String password, String competencyLevel) {
         String ans = "";
         try {
             BufferedReader buffer = new BufferedReader(new InputStreamReader(new FileInputStream("D://JavaProject/curs/enter/expert.txt")));
@@ -219,7 +219,7 @@ public class ServerFunctions {
         return res.toString();
     }
 
-    public static String deleteExpert(String login) {
+    synchronized public static String deleteExpert(String login) {
         String ans = "";
         try {
             BufferedReader bufferedReader;
@@ -285,7 +285,7 @@ public class ServerFunctions {
         return ans;
     }
 
-    public static String editExpert(String login, String competencyLevel) {
+    synchronized public static String editExpert(String login, String competencyLevel) {
         String ans = "";
         try {
             BufferedReader bufferedReader;
@@ -356,7 +356,7 @@ public class ServerFunctions {
         return ans;
     }
 
-    public static String addGoal(String title, String description){
+    synchronized public static String addGoal(String title, String description){
         String ans = "";
         try {
             BufferedReader buffer = new BufferedReader(new InputStreamReader(new FileInputStream("D://JavaProject/curs/enter/goal.txt")));
@@ -392,7 +392,7 @@ public class ServerFunctions {
         return ans;
     }
 
-    public static String deleteGoal(String title) {
+    synchronized public static String deleteGoal(String title) {
         String ans = "";
         try {
             BufferedReader bufferedReader;
@@ -464,7 +464,7 @@ public class ServerFunctions {
         return res;
     }
 
-    public static String editExpertMark(String login, String ratings){
+    synchronized public static String editExpertMark(String login, String ratings){
         String ans = "Оценки успешно занесены!";
         try {
             BufferedReader bufferedReader;
@@ -543,6 +543,7 @@ public class ServerFunctions {
         System.out.println(result);
         return result.toString();
     }
+
     public static String calculateNumberGoals(){
         Integer result = 0;
         String buf;
