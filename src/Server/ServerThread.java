@@ -2,6 +2,7 @@ package Server;
 
 import java.io.*;
 import java.net.Socket;
+import java.net.SocketException;
 import java.util.List;
 
 import static Server.ServerFunctions.*;
@@ -25,11 +26,9 @@ public class ServerThread extends Thread {
     public void run() {
         try {
             while (true) {
-                in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-                out = new BufferedWriter(new OutputStreamWriter(clientSocket.getOutputStream()));
                 String message = in.readLine();
                 String msg[];
-                msg = message.split(";", 10);
+                msg = message.split(";");
                 switch (msg[0]) {
                     case "authorization":
                         out.write(authorization(msg[1], msg[2], msg[3]) + System.lineSeparator());
@@ -100,8 +99,13 @@ public class ServerThread extends Thread {
                     case "showResults":
                         out.write(calculateNumberExperts()+System.lineSeparator());
                         out.flush();
-                        out.write(calculateNumberGoals()+System.lineSeparator());
+                        list = showGoals();
+                        out.write((list.size()-1) + System.lineSeparator());
                         out.flush();
+                        for (String i : list) {
+                            out.write(i + System.lineSeparator());
+                            out.flush();
+                        }
                         list = showExperts();
                         for (String i : list) {
                             out.write(i + System.lineSeparator());
@@ -109,11 +113,21 @@ public class ServerThread extends Thread {
                         }
                         break;
                     case "exit":
+                        clientSocket.close();
                         return;
                 }
             }
-        } catch (IOException e) {
+        }catch (SocketException e){
+            System.out.println("Ошибка на клиенте!");
+        }
+        catch (IOException e) {
             e.printStackTrace();
+        } finally {
+            try {
+                clientSocket.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 

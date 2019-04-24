@@ -6,6 +6,7 @@ import static Client.ClientFunctions.*;
 
 public class Menu {
     private Menu(){}
+
     public static void clearScreen() {
         for (int i = 0; i < 50; i++) {
             System.out.println();
@@ -19,6 +20,7 @@ public class Menu {
         System.out.println("0. Выход");
         Scanner in = new Scanner(System.in);
         String choice = in.nextLine();
+        //clearScreen();
         int x;
         try {
             x = Integer.parseInt(choice);
@@ -92,15 +94,15 @@ public class Menu {
             switch (choice) {
                 case 1:
                     System.out.println(1);
-                    addUser();
+                    Admin.addUser();
                     break;
                 case 2:
                     System.out.println(2);
-                    deleteUser();
+                    Admin.deleteUser();
                     break;
                 case 3:
                     System.out.println(3);
-                    showUsers();
+                    Admin.showUsers();
                     break;
                 case 0:
                     contin = false;
@@ -120,23 +122,23 @@ public class Menu {
             switch (choice) {
                 case 1:
                     System.out.println(1);
-                    addExpert();
+                    Admin.addExpert();
                     break;
                 case 2:
-                    deleteExpert();
+                    Admin.deleteExpert();
                     System.out.println(2);
                     break;
                 case 3:
                     System.out.println(3);
-                    findExpert();
+                    Admin.findExpert();
                     break;
                 case 4:
                     System.out.println(4);
-                    showExpert();
+                    Admin.showExpert();
                     break;
                 case 5:
                     System.out.println(5);
-                    editExpert();
+                    Admin.editExpert();
                     break;
                 case 6:
                     System.out.println(6);
@@ -159,19 +161,19 @@ public class Menu {
             switch (choice) {
                 case 1:
                     System.out.println(1);
-                    addGoal();
+                    Admin.addGoal();
                     break;
                 case 2:
                     System.out.println(2);
-                    deleteGoal();
+                    Admin.deleteGoal();
                     break;
                 case 3:
                     System.out.println(3);
-                    showGoals();
+                    Admin.showGoals();
                     break;
                 case 4:
                     System.out.println(4);
-                    showResults();
+                    Admin.showResults();
                     break;
                 case 0:
                     contin = false;
@@ -190,10 +192,11 @@ public class Menu {
             switch (choice) {
                 case 1:
                     System.out.println(1);
-                    showGoals();
+                    User.showGoals();
                     break;
                 case 2:
                     System.out.println(2);
+                    User.showResults();
                     break;
                 case 0:
                     contin = false;
@@ -212,11 +215,11 @@ public class Menu {
             switch (choice) {
                 case 1:
                     System.out.println(1);
-                    showGoals();
+                    Expert.showGoals();
                     break;
                 case 2:
                     System.out.println(2);
-                    estimateGoals(login);
+                    Expert.estimateGoals(login);
                     break;
                 case 0:
                     contin = false;

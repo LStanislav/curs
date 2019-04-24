@@ -14,6 +14,10 @@ public class ServerFunctions {
             System.out.println(login + " " + password);
             while ((log = buffer.readLine()) != null) {
                 pass = buffer.readLine();
+                if (type.equals("expert")) {
+                    buffer.readLine();
+                    buffer.readLine();
+                }
                 System.out.println(log + " " + pass);
                 if ((pass.equals(password)) && (log.equals(login))) {
                     return "Yes";
@@ -140,9 +144,11 @@ public class ServerFunctions {
             String log;
             String pass;
             String competLevel;
+            String ratings;
             while ((log = buffer.readLine()) != null) {
                 pass = buffer.readLine();
                 competLevel = buffer.readLine();
+                ratings = buffer.readLine();
                 if (log.equals(login)) {
                     ans = "Есть эксперт с таким логином!";
                     break;
