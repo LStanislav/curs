@@ -32,7 +32,7 @@ public class ClientFunctions {
             String ans;
             String login;
             while (true) {
-                //connector.connect();
+
                 StringBuilder msg = new StringBuilder("authorization;");
                 msg.append(type);
                 msg.append(";");

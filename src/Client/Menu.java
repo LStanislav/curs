@@ -157,7 +157,7 @@ public class Menu {
         boolean contin = true;
         while (contin) {
             int choice = showMenu(new String[]{"Добавление цели", "Удаление цели", "Просмотр всех целей с описанием",
-                    "Просмотр итоговых весов целей"});
+                    "Просмотр итоговых весов целей","Выполнение цели", "Просмотр всех выполненных целей"});
             switch (choice) {
                 case 1:
                     System.out.println(1);
@@ -174,6 +174,14 @@ public class Menu {
                 case 4:
                     System.out.println(4);
                     Admin.showResults();
+                    break;
+                case 5:
+                    System.out.println(5);
+                    Admin.makeDecision();
+                    break;
+                case 6:
+                    System.out.println(6);
+                    Admin.showDecisions();
                     break;
                 case 0:
                     contin = false;

@@ -362,7 +362,7 @@ public class ServerFunctions {
         return ans;
     }
 
-    synchronized public static String addGoal(String title, String description){
+    synchronized public static String addGoal(String title, String description) {
         String ans = "";
         try {
             BufferedReader buffer = new BufferedReader(new InputStreamReader(new FileInputStream("D://JavaProject/curs/enter/goal.txt")));
@@ -451,7 +451,7 @@ public class ServerFunctions {
         return ans;
     }
 
-    public static List<String> showGoals(){
+    public static List<String> showGoals() {
         File file = new File("D://JavaProject/curs/enter/goal.txt");
         System.out.println(file.exists() + " " + file.getAbsolutePath());
         ArrayList<String> res = new ArrayList<>();
@@ -470,7 +470,7 @@ public class ServerFunctions {
         return res;
     }
 
-    synchronized public static String editExpertMark(String login, String ratings){
+    synchronized public static String editExpertMark(String login, String ratings) {
         String ans = "Оценки успешно занесены!";
         try {
             BufferedReader bufferedReader;
@@ -531,12 +531,12 @@ public class ServerFunctions {
         return ans;
     }
 
-    public static String calculateNumberExperts(){
+    public static String calculateNumberExperts() {
         Integer result = 0;
         String buf;
         try {
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(new FileInputStream("D://JavaProject/curs/enter/expert.txt")));
-            while ((buf=bufferedReader.readLine())!=null){
+            while ((buf = bufferedReader.readLine()) != null) {
                 result++;
             }
         } catch (FileNotFoundException e) {
@@ -545,27 +545,88 @@ public class ServerFunctions {
             e.printStackTrace();
         }
         System.out.println(result);
-        result/=4;
+        result /= 4;
         System.out.println(result);
         return result.toString();
     }
 
-    public static String calculateNumberGoals(){
-        Integer result = 0;
-        String buf;
+    public static String solveTask(String title) {
+        String ans = "";
         try {
-            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(new FileInputStream("D://JavaProject/curs/enter/goal.txt")));
-            while ((buf=bufferedReader.readLine())!=null){
-                result++;
+            BufferedReader bufferedReader;
+            FileWriter fileWriter;
+            bufferedReader = new BufferedReader(new InputStreamReader(new FileInputStream("D://JavaProject/curs/enter/goal.txt")));
+            String tit;
+            String descr, description = "";
+            while ((tit = bufferedReader.readLine()) != null) {
+                descr = bufferedReader.readLine();
+                if (tit.equals(title)) {
+                    description = descr;
+                    ans = "Цель отмечена решенной!";
+                }
+            }
+
+            if (!ans.equals("")) {
+                bufferedReader = new BufferedReader(new InputStreamReader(new FileInputStream("D://JavaProject/curs/enter/goal.txt")));
+                fileWriter = new FileWriter("D://JavaProject/curs/enter/buffer.txt", true);
+
+                while ((tit = bufferedReader.readLine()) != null) {
+                    descr = bufferedReader.readLine();
+                    if (!tit.equals(title)) {
+                        fileWriter.write(tit + "\n");
+                        fileWriter.write(descr + "\n");
+                    }
+                }
+                fileWriter.close();
+                fileWriter = new FileWriter("D://JavaProject/curs/enter/goal.txt");
+                fileWriter.write("");
+                fileWriter.close();
+
+                bufferedReader = new BufferedReader(new InputStreamReader(new FileInputStream("D://JavaProject/curs/enter/buffer.txt")));
+                fileWriter = new FileWriter("D://JavaProject/curs/enter/goal.txt", true);
+                while ((tit = bufferedReader.readLine()) != null) {
+                    descr = bufferedReader.readLine();
+                    fileWriter.write(tit + "\n");
+                    fileWriter.write(descr + "\n");
+                    fileWriter.flush();
+                }
+                fileWriter = new FileWriter("D://JavaProject/curs/enter/buffer.txt");
+                fileWriter.write("");
+                fileWriter.close();
+
+                fileWriter = new FileWriter("D://JavaProject/curs/enter/solved_goals.txt", true);
+                fileWriter.write(title + "\n");
+                fileWriter.write(description + "\n");
+                fileWriter.flush();
+                fileWriter.close();
+
+            } else {
+                ans = "Нет цели с таким заголовком!";
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        System.out.println(result);
-        result/=2;
-        System.out.println(result);
-        return result.toString();
+        return ans;
+    }
+
+    public static List<String> showDecisions() {
+        File file = new File("D://JavaProject/curs/enter/solved_goals.txt");
+        System.out.println(file.exists() + " " + file.getAbsolutePath());
+        ArrayList<String> res = new ArrayList<>();
+        try {
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(new FileInputStream("D://JavaProject/curs/enter/solved_goals.txt")));
+            String tit;
+            String descr;
+            while ((tit = bufferedReader.readLine()) != null) {
+                descr = bufferedReader.readLine();
+                res.add(tit + ";" + descr + ";");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        res.add(";;");
+        return res;
     }
 }

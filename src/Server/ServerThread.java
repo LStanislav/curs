@@ -10,18 +10,17 @@ import static Server.ServerFunctions.showExperts;
 
 public class ServerThread extends Thread {
 
-    private Socket clientSocket; // сокет, через который сервер общается с клиентом,
-    // кроме него - клиент и сервер никак не связаны
-    private BufferedReader in; // поток чтения из сокета
-    private BufferedWriter out; // поток записи в сокет
+    private Socket clientSocket;
+    private BufferedReader in;
+    private BufferedWriter out;
 
     public ServerThread(Socket clientSocket) throws IOException {
         this.clientSocket = clientSocket;
-        // если потоку ввода/вывода приведут к генерированию исключения, оно проброситься дальше
         in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
         out = new BufferedWriter(new OutputStreamWriter(clientSocket.getOutputStream()));
-        start(); // вызываем run()
+        start();
     }
+
     @Override
     public void run() {
         try {
@@ -69,15 +68,15 @@ public class ServerThread extends Thread {
                         out.flush();
                         break;
                     case "editExpert":
-                        out.write(editExpert(msg[1],msg[2]) + System.lineSeparator());
+                        out.write(editExpert(msg[1], msg[2]) + System.lineSeparator());
                         out.flush();
                         break;
                     case "addGoal":
-                        out.write(addGoal(msg[1],msg[2]) +  System.lineSeparator());
+                        out.write(addGoal(msg[1], msg[2]) + System.lineSeparator());
                         out.flush();
                         break;
                     case "deleteGoal":
-                        out.write(deleteGoal(msg[1]) +  System.lineSeparator());
+                        out.write(deleteGoal(msg[1]) + System.lineSeparator());
                         out.flush();
                         break;
                     case "showGoals":
@@ -97,10 +96,10 @@ public class ServerThread extends Thread {
                         out.flush();
                         break;
                     case "showResults":
-                        out.write(calculateNumberExperts()+System.lineSeparator());
+                        out.write(calculateNumberExperts() + System.lineSeparator());
                         out.flush();
                         list = showGoals();
-                        out.write((list.size()-1) + System.lineSeparator());
+                        out.write((list.size() - 1) + System.lineSeparator());
                         out.flush();
                         for (String i : list) {
                             out.write(i + System.lineSeparator());
@@ -112,15 +111,25 @@ public class ServerThread extends Thread {
                             out.flush();
                         }
                         break;
+                    case "makeDecision":
+                        out.write(solveTask(msg[1]) + System.lineSeparator());
+                        out.flush();
+                        break;
+                    case "showDecisions":
+                        list = showDecisions();
+                        for (String i : list) {
+                            out.write(i + System.lineSeparator());
+                            out.flush();
+                        }
+                        break;
                     case "exit":
                         clientSocket.close();
                         return;
                 }
             }
-        }catch (SocketException e){
+        } catch (SocketException e) {
             System.out.println("Ошибка на клиенте!");
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         } finally {
             try {

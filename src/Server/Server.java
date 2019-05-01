@@ -10,8 +10,6 @@ import static Server.ServerFunctions.*;
 public class Server {
     private static Socket clientSocket;
     private static ServerSocket server;
-    private static BufferedReader in;
-    private static BufferedWriter out;
 
     public static void main(String[] args) throws IOException {
         try {
@@ -24,6 +22,7 @@ public class Server {
             }
         } catch (IOException e) {
             e.printStackTrace();
+
             //clientSocket.close();
         } finally {
             server.close();

@@ -346,4 +346,34 @@ public class Admin extends BaseUser {
             e.printStackTrace();
         }
     }
+
+    public static void makeDecision(){
+        StringBuilder msg = new StringBuilder("makeDecision;");
+        System.out.println("Введите заголовок выполненой задачи: ");
+        String title = reader.nextLine();
+        msg.append(title + ";");
+        try {
+            out.write(msg + System.lineSeparator());
+            out.flush();
+            System.out.println(in.readLine());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void showDecisions(){
+        StringBuilder msg = new StringBuilder("showDecisions;");
+        try {
+            out.write(msg + System.lineSeparator());
+            out.flush();
+            String buf = in.readLine();
+            while (!buf.equals(";;")) {
+                String part[] = buf.split(";", 5);
+                System.out.println(part[0] + "  |  " + part[1]);
+                buf = in.readLine();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }
