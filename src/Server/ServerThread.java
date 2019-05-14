@@ -5,6 +5,7 @@ import java.net.Socket;
 import java.net.SocketException;
 import java.util.List;
 
+import static Server.Server.*;
 import static Server.ServerFunctions.*;
 import static Server.ServerFunctions.showExperts;
 
@@ -24,6 +25,8 @@ public class ServerThread extends Thread {
     @Override
     public void run() {
         try {
+            incNumberUsers();
+            showNumberUsers();
             while (true) {
                 String message = in.readLine();
                 String msg[];
@@ -123,6 +126,8 @@ public class ServerThread extends Thread {
                         }
                         break;
                     case "exit":
+                        decNumberUsers();
+                        showNumberUsers();
                         clientSocket.close();
                         return;
                 }

@@ -8,6 +8,9 @@ public class ClientFunctions {
 
 
     public static String encrypt(String string) {
+        if (string.equals("")){
+            return "";
+        }
         StringBuilder result = new StringBuilder();
         for (int i = 0; i < string.length(); i++) {
             if (Character.isDigit(string.charAt(i))) {
@@ -29,8 +32,9 @@ public class ClientFunctions {
 
     public static void authorization(String type) {
         try {
-            String ans;
-            String login;
+            String ans = "";
+            String login = "";
+            String password = "";
             while (true) {
 
                 StringBuilder msg = new StringBuilder("authorization;");
@@ -41,7 +45,8 @@ public class ClientFunctions {
                 msg.append(encrypt(login));
                 msg.append(";");
                 System.out.print("Пароль: ");
-                msg.append(encrypt(reader.nextLine()));
+                password = reader.nextLine();
+                msg.append(encrypt(password));
                 msg.append(";");
                 out.write(msg + System.lineSeparator());
                 out.flush();

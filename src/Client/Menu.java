@@ -2,6 +2,7 @@ package Client;
 
 import java.util.Scanner;
 
+import static Client.Admin.tablePriority;
 import static Client.ClientFunctions.*;
 
 public class Menu {
@@ -142,6 +143,7 @@ public class Menu {
                     break;
                 case 6:
                     System.out.println(6);
+                    tablePriority();
                     break;
                 case 0:
                     contin = false;

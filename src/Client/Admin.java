@@ -4,24 +4,15 @@ import javafx.util.Pair;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Comparator;
-import java.util.TreeMap;
 
 import static Client.Client.*;
 import static Client.Client.reader;
 import static Client.ClientFunctions.decoding;
 import static Client.ClientFunctions.encrypt;
-import static java.lang.Math.exp;
 import static java.lang.Math.min;
 
 public class Admin extends BaseUser {
-    public Admin() {
-    }
-
-    public Admin(String login, String password) {
-        super(login, password);
-    }
 
     public static void showResults() {
         StringBuilder msg = new StringBuilder("showResults;");
@@ -61,7 +52,7 @@ public class Admin extends BaseUser {
 
             for (i = 0; i < numberExperts; i++) {
                 System.out.printf("%" + max + "s(%2s) - ", decoding(expertName[i]), competencies[i]);
-                for (int j = 0; j < numberGoals; j++){
+                for (int j = 0; j < numberGoals; j++) {
                     System.out.printf("%3d", marks[i][j]);
                     double multiplier = (double) competencies[i] / (double) sumCompetencies;
                     results[j] += multiplier * (double) marks[i][j];
@@ -70,18 +61,18 @@ public class Admin extends BaseUser {
             }
             System.out.println();
             max = -1;
-            ArrayList<Pair<Double,String>> res = new ArrayList<>();
+            ArrayList<Pair<Double, String>> res = new ArrayList<>();
             System.out.println("Итоговые веса целей:");
             for (int j = 0; j < numberGoals; j++) {
                 max = Math.max(max, results.length);
                 String part[] = goals[j].split(";");
-                res.add(new Pair(results[j],part[0]));
+                res.add(new Pair(results[j], part[0]));
                 System.out.printf("%3.3f %s\n", results[j], part[0]);
             }
-            Comparator <Pair<Double,String>> comparator = new Comparator<Pair<Double, String>>() {
+            Comparator<Pair<Double, String>> comparator = new Comparator<Pair<Double, String>>() {
                 @Override
                 public int compare(Pair<Double, String> o1, Pair<Double, String> o2) {
-                    if (o1.getKey()>o2.getKey())
+                    if (o1.getKey() > o2.getKey())
                         return -1;
                     else return 1;
                 }
@@ -234,7 +225,7 @@ public class Admin extends BaseUser {
             String buf = in.readLine();
             if (!buf.equals("")) {
                 String part[] = buf.split(";", 20);
-                System.out.print(decoding(part[0])  + "  |  " + part[2] + " | (");
+                System.out.print(decoding(part[0]) + "  |  " + part[2] + " | (");
                 String ratings[] = part[3].split(" ", 20);
 
                 for (int i = 0; i < ratings.length - 1; i++) {
@@ -347,7 +338,7 @@ public class Admin extends BaseUser {
         }
     }
 
-    public static void makeDecision(){
+    public static void makeDecision() {
         StringBuilder msg = new StringBuilder("makeDecision;");
         System.out.println("Введите заголовок выполненой задачи: ");
         String title = reader.nextLine();
@@ -361,7 +352,7 @@ public class Admin extends BaseUser {
         }
     }
 
-    public static void showDecisions(){
+    public static void showDecisions() {
         StringBuilder msg = new StringBuilder("showDecisions;");
         try {
             out.write(msg + System.lineSeparator());
@@ -375,5 +366,28 @@ public class Admin extends BaseUser {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public static void tablePriority() {
+        System.out.println(" ____________________________________________________________");
+        System.out.printf("|%50s   |  %2s  |\n", "Руководитель отдела производства", "2");
+        System.out.println("|_____________________________________________________|______|");
+        System.out.printf("|%50s   |  %2s  |\n", "Руководитель отдела продаж", "3");
+        System.out.println("|_____________________________________________________|______|");
+        System.out.printf("|%50s   |  %2s  |\n", "Руководитель отдела маркетинга", "3");
+        System.out.println("|_____________________________________________________|______|");
+        System.out.printf("|%50s   |  %2s  |\n", "Руководитель отдела безопасности", "2");
+        System.out.println("|_____________________________________________________|______|");
+        System.out.printf("|%50s   |  %2s  |\n", "Руководитель отдела кадров", "3");
+        System.out.println("|_____________________________________________________|______|");
+        System.out.printf("|%50s   |  %2s  |\n", "Заместитель директора завода", "4");
+        System.out.println("|_____________________________________________________|______|");
+        System.out.printf("|%50s   |  %2s  |\n", "Директор завода", "5");
+        System.out.println("|_____________________________________________________|______|");
+        System.out.printf("|%50s   |  %2s  |\n", "Член совета директоров компаниии", "8");
+        System.out.println("|_____________________________________________________|______|");
+        System.out.printf("|%50s   |  %2s  |\n", "Председатель совета директоров компаниии", "10");
+        System.out.println("|_____________________________________________________|______|");
+
     }
 }
